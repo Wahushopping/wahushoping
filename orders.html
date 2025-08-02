@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>My Orders - MiniShop</title>
+  <link rel="stylesheet" href="order.css"/>
+  <style>
+    h2 {
+      padding-top: 70px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><img src="image/WhatsApp Image 2025-07-30 at 22.14.43_da49cc2e.jpg" style="width: 100px; padding-top: 10px; border-radius:5px;"></div>
+   <div style="display: flex; align-items: center;">
+  <i class="fas fa-location-dot" style="color: red; margin-right: 5px;"></i>
+  <div id="addressText" style="color: aliceblue; font-size: xx-small; padding-right: 20px; text-align: center;"></div>
+</div>
+  </header>
+
+  <main class="form-page">
+    <h2>My Orders</h2>
+    <div id="orderList">Loading orders...</div>
+    
+  </main>
+
+  <footer>
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="products.html" class="nav-item">
+        <i class="fas fa-box-open"></i>
+        <span>Products</span>
+      </a>
+      <a href="cart.html" class="nav-item">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Cart</span>
+      </a>
+
+      <a href="orders.html" class="nav-item">
+        <i class="fas fa-receipt" style="color: green;"></i>
+        <span>Orders</span>
+      </a>
+
+      <a href="login.html" class="nav-item" id="userLinks">
+        <span id="userLinks">Login </span>
+      </a>
+    </nav>
+  </footer>
+  <script>
+    const token = localStorage.getItem("token");
+    const userLinks = document.getElementById("userLinks");
+    const addressTextEl = document.getElementById("addressText");
+   if (token) {
+      userLinks.innerHTML = `
+    
+    <a href="profile.html"><i class="fas fa-user"></i><br>Profile</a>
+    
+  `;
+    } else {
+      userLinks.innerHTML = `
+    
+    <a href="login.html"><i class="fas fa-user"></i><br>Login</a>
+    
+     `;
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      alert("Logged out successfully!");
+      window.location.href = "index.html";
+    }
+
+    // ✅ Fetch orders safely
+    fetch("http://localhost:5000/api/orders/my", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(async res => {
+      if (!res.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+      return await res.json();
+    })
+    .then(orders => {
+      const orderList = document.getElementById("orderList");
+
+      if (!Array.isArray(orders) || orders.length === 0) {
+        orderList.innerHTML = "<p>No orders yet.</p>";
+        return;
+      }
+
+      orderList.innerHTML = orders.map(order => `
+        <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0;">
+          <div class="div50">
+          <p><strong>Placed on:</strong> ${new Date(order.createdAt).toLocaleString()}</p>
+          <p><strong>Address:</strong> 
+               ${order.address?.road || ""},
+               ${order.address?.street || ""}, 
+               ${order.address?.city || ""}, 
+               ${order.address?. state || ""},
+               ${order.address?.pincode || ""},
+               
+               
+
+               <p><strong>Phone:</strong>${order.address?.phone || ""}</p>
+               </p>
+          <p><strong>Total:</strong> ₹${order.total}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+          </div>
+            ${order.items.map(item => `
+              <div style="display: flex; border-radius:5px;  align-items: center;  gap: 10px;  border: 2px solid #ccc; padding: 5px 10px; width:100%">
+                <div style="color:black;width:150px">
+                <img src="${item.image}" alt="${item.name}" style="width: 90px; height: 95px; object-fit: cover; ">
+                  
+                  <p style="margin: 0;"><strong>${item.name}</strong></p>
+                  <p style="margin: 0;">Qty: ${item.qty}</p>
+                  <p style="margin: 0;">Price: ₹${item.price}</p>
+                   
+                    </div>
+                    <div style="; ">
+<div class="status-tracker-wrapper">
+  <div class="status-tracker collapsed" id="statusTracker">
+    <div class="step ${['Ordered','Packed','Shipped','Out for Delivery','Delivered'].includes(order.status) ? 'active' : ''}">
+      <div class="circle"></div>
+      <span class="label">Ordered</span>
+    </div>
+    <div class="step ${['Packed','Shipped','Out for Delivery','Delivered'].includes(order.status) ? 'active' : ''}">
+      <div class="circle"></div>
+      <span class="label">Packed</span>
+    </div>
+    <div class="step ${['Shipped','Out for Delivery','Delivered'].includes(order.status) ? 'active' : ''}">
+      <div class="circle"></div>
+      <span class="label">Shipped</span>
+    </div>
+    <div class="step ${['Out for Delivery','Delivered'].includes(order.status) ? 'active' : ''}">
+      <div class="circle"></div>
+      <span class="label">Out for Delivery</span>
+    </div>
+    <div class="step ${order.status === 'Delivered' ? 'active' : ''}">
+      <div class="circle"></div>
+      <span class="label">Delivered</span>
+    </div>
+    ${item.returnRequested || item.returnStatus
+      ? `<div class="step ${item.returnStatus === 'Approved' ? 'active' : item.returnRequested ? 'pending' : ''}">
+          <div class="circle"></div>
+          <span class="label">Return</span>
+        </div>`
+      : ''}
+  </div>
+  <button class="view-toggle-btn" onclick="toggleStatusView()">View More</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p style="margin: 0; color:green;"><strong>Delivery Date:</strong> ${order.deliveryDate ? new Date(order.deliveryDate).toLocaleDateString() : 'Not set'}</p>
+${item.returnStatus === "Approved"
+  ? `<p style="color: green; margin: 0;">Return Approved</p>`
+  : item.returnStatus === "Rejected"
+    ? `<p style="color: red; margin: 0;">Return Rejected</p>`
+    : item.returnRequested
+      ? `<p style="color: orange; margin: 0;">Return Requested</p>`
+      : (order.status === "Delivered" && order.deliveryDate &&
+         (new Date() - new Date(order.deliveryDate)) <= 7 * 24 * 60 * 60 * 1000)
+        ? `<button onclick="requestReturn('${order._id}', '${item._id}')" style="margin-top: 5px; padding: 5px 10px; border: none; background-color: red; color: white; border-radius: 3px; cursor: pointer;">
+             Return
+           </button>`
+        : ""
+}
+
+ </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `).join("");
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      document.getElementById("orderList").innerHTML = "<p>Error loading orders.</p>";
+    });
+
+
+       
+function changeAddress() {
+  const addressTextEl = document.getElementById("addressText");
+  if (!addressTextEl) return;
+
+  const user = JSON.parse(localStorage.getItem("user") || null);
+
+  // 🚫 If user not logged in
+  if (!user) {
+    addressTextEl.innerHTML = `
+      <button onclick="window.location.href='profile.html'" style="width: 120px; color: green;  height: 35px; badding-bottom:20px">Add Address</button>
+
+    `;
+    return;
+  }
+
+  const a = user.address || {};
+
+  // 👤 Logged in but no address
+  if (!a.name || !a.city || !a.pincode || !a.phone) {
+    addressTextEl.innerHTML = `
+     <button onclick="window.location.href='profile.html'" style="width: 120px; color: green; height: 35px; badding-bottom:20px">Add Address</button>
+
+    `;
+    return;
+  }
+
+  // ✅ Show address
+  addressTextEl.innerHTML = `
+    <a href='address.html' ">
+    ${a.street || ""}${a.road ? ", " + a.road : ""}${a.place ? ", " + a.place : ""}<br/>
+    ${a.city}, ${a.state || ""} - ${a.pincode}<br/>
+    
+    </a>
+  `;
+}
+
+// Run when page loads
+window.addEventListener('DOMContentLoaded', changeAddress);
+  </script>
+  <script>
+  function requestReturn(orderId, itemId) {
+    const reason = prompt("Enter return reason:");
+    if (!reason) return;
+
+    fetch(`http://localhost:5000/api/orders/${orderId}/return`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ itemId, reason })
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Return request failed");
+      return res.json();
+    })
+    .then(data => {
+      alert("Return request submitted successfully!");
+      location.reload();
+    })
+    .catch(err => {
+      console.error("Return Error:", err);
+      alert("Error submitting return request.");
+    });
+  }
+
+function getStepClass(stepName, orderStatus, item) {
+  if (stepName === "Return") {
+    if (item.returnStatus === "Approved") return "step active";
+    if (item.returnRequested) return "step pending";
+    return "";
+  }
+  return orderStatus === stepName || steps.indexOf(orderStatus) > steps.indexOf(stepName)
+    ? "step active" : "step";
+}
+
+
+</script>
+<script>
+  function toggleStatusView() {
+    const tracker = document.getElementById("statusTracker");
+    const btn = document.querySelector(".view-toggle-btn");
+
+    tracker.classList.toggle("collapsed");
+    btn.textContent = tracker.classList.contains("collapsed") ? "View More" : "View Less";
+  }
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Product Details - WahuShop</title>
+  <link rel="stylesheet" href="product.css" />
+</head>
+
+<body>
+
+  <header>
+    <div class="logo"><img src="image/WhatsApp Image 2025-07-30 at 22.14.43_da49cc2e.jpg"
+        style="width: 100px; padding-top: 10px; border-radius:5px;"></div>
+    <div style="display: flex; align-items: center;">
+      <i class="fas fa-location-dot" style="color: red; margin-right: 5px;"></i>
+      <div id="addressText" style="color: aliceblue; font-size: xx-small; padding-right: 20px; text-align: center;">
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+    <main class="product-details">
+
+      <!-- 📍 Add this inside the product detail container -->
+      <div class="product-images-container">
+        <div class="thumbnail-images" id="thumbnailContainer">
+          <!-- Thumbnails go here -->
+        </div>
+
+        <div class="main-image">
+          <img id="mainProductImage" src="" alt="Main Product Image">
+        </div>
+      </div>
+
+
+
+
+      <div class="product-info">
+      <h3 id="product-name">Loading...</h3>
+      <b>★★★★☆</b>
+      <p id="product-price"></p>
+      <h4 id="product-Option"></h4>
+
+      <h5>Select Sizes:</h5>
+      <div id="product-sizes"></div>
+
+      <button id="addToCartBtn">Add to Cart</button>
+      <button id="addToWishlistBtn" class="wishlist-button" style="background-color: rgba(0, 0, 0, 0.747);">
+        <i class="fas fa-heart"></i> Add to Wishlist
+      </button>
+
+      <button id="shareBtn" class="share-button" style="background-color: rgba(63, 63, 63, 0.623);">
+        <i class="fas fa-share-alt"></i> Share
+      </button>
+
+      <h3>Product Details</h3>
+      <h6 id="product-description" class="description"></h6>
+      <button id="toggleDescriptionBtn" style="display:none; ">Read More</button>
+
+
+      <img id="product-image" src="" alt="Product Image" />
+
+      <h3>Video review</h3>
+      <div id="product-video"></div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="products.html" class="nav-item">
+        <i class="fas fa-box-open"></i>
+        <span>Products</span>
+      </a>
+      <a href="cart.html" class="nav-item">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Cart</span>
+      </a>
+
+      <a href="orders.html" class="nav-item">
+        <i class="fas fa-receipt"></i>
+        <span>Orders</span>
+      </a>
+
+      <a href="login.html" class="nav-item" id="userLinks">
+        <span id="userLinks">Login </span>
+      </a>
+    </nav>
+  </footer>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+
+    const productName = document.getElementById('product-name');
+    const productOption = document.getElementById('product-Option');
+    const productImage = document.getElementById('product-image');
+    const productPrice = document.getElementById('product-price');
+    const productDescription = document.getElementById('product-description');
+    const productSizes = document.getElementById('product-sizes');
+    const moreImagesDiv = document.getElementById('more-images');
+    const productVideoDiv = document.getElementById('product-video');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const addressTextEl = document.getElementById("addressText");
+    const mainImage = document.getElementById("mainProductImage");
+    const thumbnailContainer = document.getElementById("thumbnailContainer");
+    let selectedSize = null;
+    let currentProduct = null;
+    let currentImageIndex = 0;
+    let isDragging = false;
+    let startX = 0;
+    let endX = 0;
+
+    const mainImageContainer = document.querySelector(".main-image");
+
+    mainImageContainer.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.clientX;
+    });
+
+    mainImageContainer.addEventListener("mouseup", (e) => {
+      if (!isDragging) return;
+      endX = e.clientX;
+      handleSwipe();
+      isDragging = false;
+    });
+
+    mainImageContainer.addEventListener("mouseleave", () => {
+      isDragging = false;
+    });
+
+    mainImageContainer.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    mainImageContainer.addEventListener("touchend", (e) => {
+      endX = e.changedTouches[0].clientX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      if (!currentProduct?.moreImages?.length) return;
+      const swipeDistance = endX - startX;
+
+      if (swipeDistance > 50) {
+        // Swipe right
+        currentImageIndex = (currentImageIndex - 1 + currentProduct.moreImages.length) % currentProduct.moreImages.length;
+      } else if (swipeDistance < -50) {
+        // Swipe left
+        currentImageIndex = (currentImageIndex + 1) % currentProduct.moreImages.length;
+      }
+
+      updateMainImageFromIndex();
+    }
+
+    function updateMainImageFromIndex() {
+      if (!currentProduct?.moreImages?.length) return;
+      const newImage = currentProduct.moreImages[currentImageIndex];
+      mainImage.src = `http://localhost:5000/uploads/${newImage}`;
+
+      // Update active class on thumbnails
+      document.querySelectorAll(".thumbnail-images img").forEach((img, i) => {
+        img.classList.toggle("active", i === currentImageIndex);
+      });
+    }
+
+    mainImage.addEventListener("dragstart", e => e.preventDefault());
+
+
+
+
+    function calculateDiscount(sellPrice, originalPrice) {
+      if (!originalPrice || originalPrice <= 0) return 0;
+      const discount = ((originalPrice - sellPrice) / originalPrice) * 100;
+      return Math.round(discount);
+    }
+
+    async function fetchProductDetails() {
+      try {
+        const res = await fetch(`http://localhost:5000/api/products/${productId}`);
+        const product = await res.json();
+
+        currentProduct = product;
+
+        productName.textContent = product.name;
+        productOption.textContent = product.option;
+        productImage.src = product.image;
+
+        const original = product.originalprice || product.originalPrice;
+        const discount = calculateDiscount(product.price, original);
+
+        productPrice.innerHTML = `
+          ${discount > 0 ? `<span style="color:green; font-weight:bold; font-size:15px">${discount}% OFF</span>` : ''}
+          ${original ? `<span style="color:gray; font-size:12px; margin-left:8px; text-decoration:line-through;">₹${original}</span>` : ''}
+          ₹${product.price}
+        `;
+
+        productDescription.innerHTML = product.description.replace(/\n/g, "<br>");
+
+
+        if (product.description && product.description.length > 100) {
+          const toggleBtn = document.getElementById('toggleDescriptionBtn');
+          toggleBtn.style.display = 'inline-block';
+
+          toggleBtn.addEventListener('click', () => {
+            productDescription.classList.toggle('show');
+            toggleBtn.textContent = productDescription.classList.contains('show') ? 'Show Less' : 'Read More';
+          });
+        }
+
+        // Size placeholder
+        const placeholder = document.createElement("div");
+        placeholder.id = "size-placeholder";
+        placeholder.style.color = "#888";
+        placeholder.style.marginBottom = "10px";
+        placeholder.style.fontStyle = "italic";
+
+        productSizes.appendChild(placeholder);
+
+        // Size options
+        if (product.sizes && product.sizes.length) {
+          product.sizes.forEach(size => {
+            const label = document.createElement('label');
+            label.classList.add('size-option');
+            label.setAttribute('data-size', size);
+            label.textContent = size;
+
+            const radio = document.createElement('input');
+            radio.type = "radio";
+            radio.name = "selectedSize";
+            radio.value = size;
+            radio.style.display = "none";
+            label.appendChild(radio);
+
+            label.addEventListener('click', () => {
+              document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('active'));
+              label.classList.add('active');
+              placeholder.style.display = "none";
+              selectedSize = size;
+            });
+
+            productSizes.appendChild(label);
+          });
+        }
+
+        // More images
+
+        if (product.moreImages && product.moreImages.length) {
+          mainImage.src = `http://localhost:5000/uploads/${product.moreImages[0]}`;
+
+          product.moreImages.forEach((imgSrc, index) => {
+            const img = document.createElement("img");
+            img.src = `http://localhost:5000/uploads/${imgSrc}`;
+            if (index === 0) img.classList.add("active");
+
+            img.addEventListener("click", () => {
+              document.querySelectorAll(".thumbnail-images img").forEach(i => i.classList.remove("active"));
+              img.classList.add("active");
+              mainImage.src = img.src;
+            });
+
+            thumbnailContainer.appendChild(img);
+          });
+        }
+
+
+        // Video review
+        if (product.video) {
+          const videoElem = document.createElement('video');
+          videoElem.src = `http://localhost:5000/uploads/${product.video}`;
+          videoElem.controls = true;
+          videoElem.style.width = '100%';
+          productVideoDiv.appendChild(videoElem);
+        }
+
+      } catch (err) {
+        productName.textContent = "❌ Product not found.";
+        console.error("Failed to load product:", err);
+      }
+    }
+
+    async function addToCart(product) {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("⚠️ Please log in to add items to cart.");
+        return;
+      }
+
+      if (!selectedSize) {
+        alert("⚠️ Please select a size.");
+        return;
+      }
+
+      const item = {
+        id: product._id,
+        name: product.name,
+        image: currentProduct.moreImages?.[currentImageIndex]
+          ? `http://localhost:5000/uploads/${currentProduct.moreImages[currentImageIndex]}`
+          : product.image,
+        size: selectedSize,
+        price: product.price,
+        qty: 1
+      };
+
+
+      try {
+        const res = await fetch("http://localhost:5000/api/cart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ items: [item] })
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          alert("✅ Item added to cart");
+        } else {
+          alert("❌ " + (result.message || "Failed to add to cart"));
+        }
+      } catch (err) {
+        console.error("Add to cart failed:", err);
+        alert("❌ Error adding to cart.");
+      }
+    }
+
+    const addToWishlistBtn = document.getElementById("addToWishlistBtn");
+
+    addToWishlistBtn.addEventListener("click", () => {
+      if (currentProduct) {
+        toggleWishlist(currentProduct);
+      }
+    });
+
+    async function toggleWishlist(product) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("⚠️ Please log in to use wishlist.");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/wishlist/toggle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            id: product._id,
+            name: product.name,
+            image: currentProduct.moreImages?.[currentImageIndex]
+              ? `http://localhost:5000/uploads/${currentProduct.moreImages[currentImageIndex]}`
+              : product.image,
+
+            price: product.price
+          })
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          alert(result.message);
+        } else {
+          alert("❌ " + (result.message || "Error"));
+        }
+      } catch (err) {
+        console.error("Wishlist error:", err);
+        alert("❌ Error using wishlist.");
+      }
+    }
+
+
+
+    const shareBtn = document.getElementById("shareBtn");
+
+    shareBtn.addEventListener("click", () => {
+      if (navigator.share) {
+        navigator.share({
+          title: currentProduct.name,
+          text: `Check out this product on WahuShop!`,
+          url: window.location.href
+        })
+          .then(() => console.log('✅ Product shared successfully'))
+          .catch(err => console.error('❌ Error sharing:', err));
+      } else {
+        alert("Sharing is not supported in your browser.");
+      }
+    });
+
+
+
+
+    // Add to cart button click
+    addToCartBtn.addEventListener("click", () => {
+      if (currentProduct) {
+        addToCart(currentProduct);
+      }
+    });
+
+    // Load product data
+    fetchProductDetails();
+  </script>
+
+  <!-- User login/logout logic -->
+  <script>
+    const userLinks = document.getElementById("userLinks");
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      userLinks.innerHTML = `
+    
+    <a href="profile.html"><i class="fas fa-user"></i><br>Profile</a>
+    
+  `;
+    } else {
+      userLinks.innerHTML = `
+    
+    <a href="login.html"><i class="fas fa-user"></i><br>Login</a>
+    
+     `;
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      alert("👋 Logged out");
+      window.location.href = "index.html";
+    }
+
+
+
+    function changeAddress() {
+      const addressTextEl = document.getElementById("addressText");
+      if (!addressTextEl) return;
+
+      const user = JSON.parse(localStorage.getItem("user") || null);
+
+      // 🚫 If user not logged in
+      if (!user) {
+        addressTextEl.innerHTML = `
+      <button onclick="window.location.href='profile.html'" style="width: 120px; color: green;  height: 35px; badding-bottom:20px">Add Address</button>
+
+    `;
+        return;
+      }
+
+      const a = user.address || {};
+
+      // 👤 Logged in but no address
+      if (!a.name || !a.city || !a.pincode || !a.phone) {
+        addressTextEl.innerHTML = `
+     <button onclick="window.location.href='profile.html'" style="width: 120px; color: green; height: 35px; badding-bottom:20px">Add Address</button>
+
+    `;
+        return;
+      }
+
+      // ✅ Show address
+      addressTextEl.innerHTML = `
+    <a href='address.html' ">
+    ${a.street || ""}${a.road ? ", " + a.road : ""}${a.place ? ", " + a.place : ""}<br/>
+    ${a.city}, ${a.state || ""} - ${a.pincode}<br/>
+    
+    </a>
+  `;
+    }
+
+    // Run when page loads
+    window.addEventListener('DOMContentLoaded', changeAddress);
+
+  </script>
+
+</body>
+
+</html>
