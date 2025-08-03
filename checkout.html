@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Checkout - WahuShop</title>
-  <link rel="stylesheet" href="cart.css" />
+  <link rel="stylesheet" href="checkout.css" />
 </head>
 <body>
   <header>
@@ -106,7 +106,7 @@
     razorpayPaymentId: paymentId
   };
 
-  fetch("http://localhost:5000/api/orders", {
+  fetch("https://wahu-dazl.onrender.com/api/orders", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -131,7 +131,7 @@ function placeOrder() {
   if (paymentMethod === "cod") return placeCODOrder();
 
   // For UPI/Razorpay payment
-  fetch("http://localhost:5000/api/razorpay/order", {
+  fetch("https://wahu-dazl.onrender.com/api/razorpay/order", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

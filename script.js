@@ -6,7 +6,7 @@ const moreImagesDiv = document.getElementById('more-images');
 let allProducts = [];
 
 // Fetch products
-fetch('http://localhost:5000/api/products')
+fetch('https://wahu-dazl.onrender.com/api/products')
   .then(res => res.json())
   .then(products => {
     allProducts = products;
@@ -36,7 +36,17 @@ function displayProducts(products) {
     card.innerHTML = `
   <div class="div11" style="position: relative;">
     <a href="product.html?id=${product._id}" style="position: relative; display: block;">
-      <img src="${product.image}" alt="${product.name}" style="width: 100%; border-radius: 5px;" />
+      ${(() => {
+  const baseURL = "https://wahu-dazl.onrender.com/uploads/";
+  if (product.moreImages && product.moreImages.length > 0) {
+    return Array.isArray(product.moreImages)
+      ? `<img src="${baseURL}${product.moreImages[0]}" alt="More Image" style="width: 100%; border-radius: 5px;" />`
+      : `<img src="${baseURL}${product.moreImages}" alt="More Image" style="width: 100%; border-radius: 5px;" />`;
+  }
+  return `<p>No image available</p>`;
+})()}
+
+      
       
       <!-- ❤️ Wishlist Icon -->
       <i class="fas fa-heart wishlist-icon" onclick="toggleWishlist('${product._id}')" style="
@@ -152,10 +162,3 @@ function toggleWishlist(productId) {
   });
 }
 
-if (product.image) {
-          const imageElem = document.createElement('image');
-          imageElem.src = `http://localhost:5000/uploads/${product.image}`;
-          imageElem.controls = true;
-          imageElem.style.width = '100%';
-          productImageDiv.appendChild(imageElem);
-        }

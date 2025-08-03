@@ -160,9 +160,9 @@
           <h4>Sport</h4>
         </div>
       </a>
-    </div>
     
-    <div class="div50">
+    
+    
 
       <a href="kid.html">
         <div class="div51">
@@ -270,7 +270,7 @@
   <script>
     const beautyList = document.getElementById("beauty-list");
 
-    fetch("http://localhost:5000/api/beauty")
+    fetch("https://wahu-dazl.onrender.com/api/beauty")
       .then(res => res.json())
       .then(products => {
         if (!products.length) {
@@ -285,12 +285,19 @@
           const original = product.originalprice || product.originalPrice;
           const discount = calculateDiscount(product.price, original);
 
-          card.innerHTML = `
-          <div class="div13">
-            <a href="product.html?id=${product._id}">
-              <img src="${product.image}" alt="${product.name}" />
-              
-            </a>
+         card.innerHTML = `
+  <div class="div11" style="position: relative;">
+    <a href="product.html?id=${product._id}" style="position: relative; display: block;">
+      ${(() => {
+  const baseURL = "https://wahu-dazl.onrender.com/uploads/";
+  if (product.moreImages && product.moreImages.length > 0) {
+    return Array.isArray(product.moreImages)
+      ? `<img src="${baseURL}${product.moreImages[0]}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`
+      : `<img src="${baseURL}${product.moreImages}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`;
+  }
+  return `<p>No image available</p>`;
+})()}
+
           
             <p>
               ${discount > 0 ? `<span style="color:red; font-size: 12px; background-color:yellow; padding-left:5px; padding-right:5px; border-radius:3px;">${discount}% OFF</span>` : ''}
@@ -322,7 +329,7 @@
   <script>
     const topwearList = document.getElementById("topwear-list");
 
-    fetch("http://localhost:5000/api/topwear")
+    fetch("https://wahu-dazl.onrender.com/api/topwear")
       .then(res => res.json())
       .then(products => {
         if (!products.length) {
@@ -338,11 +345,18 @@
           const discount = calculateDiscount(product.price, original);
 
           card.innerHTML = `
-    <div class="div14">
-  <a href="product.html?id=${product._id}">
-    
-    <img src="${product.image}"  alt="${product.name}" />
-   
+  <div class="div11" style="position: relative;">
+    <a href="product.html?id=${product._id}" style="position: relative; display: block;">
+      ${(() => {
+  const baseURL = "https://wahu-dazl.onrender.com/uploads/";
+  if (product.moreImages && product.moreImages.length > 0) {
+    return Array.isArray(product.moreImages)
+      ? `<img src="${baseURL}${product.moreImages[0]}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`
+      : `<img src="${baseURL}${product.moreImages}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`;
+  }
+  return `<p>No image available</p>`;
+})()}
+
     
   </a>
   <b>★★★★☆</b>
@@ -365,7 +379,7 @@
   <script>
     const shoesList = document.getElementById("shoes-list");
 
-    fetch("http://localhost:5000/api/shoes")
+    fetch("https://wahu-dazl.onrender.com/api/shoes")
       .then(res => res.json())
       .then(products => {
         if (!products.length) {
@@ -379,11 +393,19 @@
           card.className = 'product-card';
           const original = product.originalprice || product.originalPrice;
           const discount = calculateDiscount(product.price, original);
+card.innerHTML = `
+  <div class="div11" style="position: relative;">
+    <a href="product.html?id=${product._id}" style="position: relative; display: block;">
+      ${(() => {
+  const baseURL = "https://wahu-dazl.onrender.com/uploads/";
+  if (product.moreImages && product.moreImages.length > 0) {
+    return Array.isArray(product.moreImages)
+     ? `<img src="${baseURL}${product.moreImages[0]}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`
+      : `<img src="${baseURL}${product.moreImages}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`;
+  }
+  return `<p>No image available</p>`;
+})()}
 
-          card.innerHTML = `
-          <div class="div12">
-            <a href="product.html?id=${product._id}">
-              <img src="${product.image}" alt="${product.name}" />
               <h3>${product.name}</h3>
             </a>
             
@@ -413,7 +435,7 @@
   <script>
     const electronicsList = document.getElementById("electronics-list");
 
-    fetch("http://localhost:5000/api/electronics")
+    fetch("https://wahu-dazl.onrender.com/api/electronics")
       .then(res => res.json())
       .then(products => {
         if (!products.length) {
@@ -429,10 +451,18 @@
           const discount = calculateDiscount(product.price, original);
 
           card.innerHTML = `
-          <div class="div10">
-            <a href="product.html?id=${product._id}">
-              <img src="${product.image}" alt="${product.name}" />
-             
+  <div class="div11" style="position: relative;">
+    <a href="product.html?id=${product._id}" style="position: relative; display: block;">
+      ${(() => {
+  const baseURL = "https://wahu-dazl.onrender.com/uploads/";
+  if (product.moreImages && product.moreImages.length > 0) {
+    return Array.isArray(product.moreImages)
+    ? `<img src="${baseURL}${product.moreImages[0]}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`
+      : `<img src="${baseURL}${product.moreImages}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`;
+  }
+  return `<p>No image available</p>`;
+})()}
+
             </a>
            
            
@@ -463,7 +493,7 @@
   <script>
     const trendingList = document.getElementById("trending-list");
 
-    fetch("http://localhost:5000/api/trending")
+    fetch("https://wahu-dazl.onrender.com/api/trending")
       .then(res => res.json())
       .then(products => {
         if (!products.length) {
@@ -476,10 +506,18 @@
           const card = document.createElement('div');
           card.className = 'product-card';
           card.innerHTML = `
-        <div class="div20">
-          <a href="product.html?id=${product._id}">
-            
-            <img src="${product.image}" alt="${product.name}" />
+  <div class="div11" style="position: relative;">
+    <a href="product.html?id=${product._id}" style="position: relative; display: block;">
+      ${(() => {
+  const baseURL = "https://wahu-dazl.onrender.com/uploads/";
+  if (product.moreImages && product.moreImages.length > 0) {
+    return Array.isArray(product.moreImages)
+    ? `<img src="${baseURL}${product.moreImages[0]}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`
+      : `<img src="${baseURL}${product.moreImages}" alt="More Image" style="width: 120px; border-radius: 5px; height: 130px;" />`;
+  }
+  return `<p>No image available</p>`;
+})()}
+
             <h3>
             ${product.option}</h3>
             

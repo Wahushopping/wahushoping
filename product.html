@@ -162,7 +162,7 @@
     function updateMainImageFromIndex() {
       if (!currentProduct?.moreImages?.length) return;
       const newImage = currentProduct.moreImages[currentImageIndex];
-      mainImage.src = `http://localhost:5000/uploads/${newImage}`;
+      mainImage.src = `https://wahu-dazl.onrender.com/uploads/${newImage}`;
 
       // Update active class on thumbnails
       document.querySelectorAll(".thumbnail-images img").forEach((img, i) => {
@@ -183,7 +183,7 @@
 
     async function fetchProductDetails() {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${productId}`);
+        const res = await fetch(`https://wahu-dazl.onrender.com/api/products/${productId}`);
         const product = await res.json();
 
         currentProduct = product;
@@ -252,11 +252,11 @@
         // More images
 
         if (product.moreImages && product.moreImages.length) {
-          mainImage.src = `http://localhost:5000/uploads/${product.moreImages[0]}`;
+          mainImage.src = `https://wahu-dazl.onrender.com/uploads/${product.moreImages[0]}`;
 
           product.moreImages.forEach((imgSrc, index) => {
             const img = document.createElement("img");
-            img.src = `http://localhost:5000/uploads/${imgSrc}`;
+            img.src = `https://wahu-dazl.onrender.com/uploads/${imgSrc}`;
             if (index === 0) img.classList.add("active");
 
             img.addEventListener("click", () => {
@@ -273,7 +273,7 @@
         // Video review
         if (product.video) {
           const videoElem = document.createElement('video');
-          videoElem.src = `http://localhost:5000/uploads/${product.video}`;
+          videoElem.src = `https://wahu-dazl.onrender.com/uploads/${product.video}`;
           videoElem.controls = true;
           videoElem.style.width = '100%';
           productVideoDiv.appendChild(videoElem);
@@ -302,7 +302,7 @@
         id: product._id,
         name: product.name,
         image: currentProduct.moreImages?.[currentImageIndex]
-          ? `http://localhost:5000/uploads/${currentProduct.moreImages[currentImageIndex]}`
+          ? `https://wahu-dazl.onrender.com/uploads/${currentProduct.moreImages[currentImageIndex]}`
           : product.image,
         size: selectedSize,
         price: product.price,
@@ -311,7 +311,7 @@
 
 
       try {
-        const res = await fetch("http://localhost:5000/api/cart", {
+        const res = await fetch("https://wahu-dazl.onrender.com/api/cart", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -349,7 +349,7 @@
       }
 
       try {
-        const res = await fetch("http://localhost:5000/api/wishlist/toggle", {
+        const res = await fetch("https://wahu-dazl.onrender.com/api/wishlist/toggle", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -359,7 +359,7 @@
             id: product._id,
             name: product.name,
             image: currentProduct.moreImages?.[currentImageIndex]
-              ? `http://localhost:5000/uploads/${currentProduct.moreImages[currentImageIndex]}`
+              ? `https://wahu-dazl.onrender.com/uploads/${currentProduct.moreImages[currentImageIndex]}`
               : product.image,
 
             price: product.price

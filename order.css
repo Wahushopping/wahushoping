@@ -11,8 +11,8 @@ body {
   background: linear-gradient(135deg, #fceabb, #f1d37f);
   color: #333;
   padding-bottom: 50px;
-  padding-left:20px;
-  padding-right: 20px;
+  padding-left:10px;
+  padding-right: 10px;
 
 }
 footer {
@@ -62,7 +62,7 @@ footer {
 }
 @media screen and (max-width: 600px) {
   .form-page {
-    padding: 20px;
+    padding: 10px;
   }
   .nav-item span {
     font-size: 12px;

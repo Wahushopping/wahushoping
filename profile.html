@@ -90,7 +90,7 @@
       }
 
      try {
-  const res = await fetch("http://localhost:5000/api/users/me", {
+  const res = await fetch("https://wahu-dazl.onrender.com/api/users/me", {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -136,7 +136,7 @@
 const wishlistContainer = document.getElementById("wishlist");
 
 try {
-  const res = await fetch("http://localhost:5000/api/wishlist", {
+  const res = await fetch("https://wahu-dazl.onrender.com/api/wishlist", {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -216,7 +216,7 @@ async function removeFromWishlist(productId) {
   if (!token) return;
 
   try {
-    const res = await fetch(`http://localhost:5000/api/wishlist/remove/${productId}`, {
+    const res = await fetch(`https://wahu-dazl.onrender.com/api/wishlist/remove/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`
@@ -246,7 +246,7 @@ async function removeFromWishlist(productId) {
   <script>
     const trendingList = document.getElementById("trending-list");
 
-    fetch("http://localhost:5000/api/trending")
+    fetch("https://wahu-dazl.onrender.com/api/trending")
       .then(res => res.json())
       .then(products => {
         if (!products.length) {

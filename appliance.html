@@ -76,7 +76,7 @@
   <script>
     const homeapplianceList = document.getElementById("homeappliance-list");
 
-    fetch("http://localhost:5000/api/homeappliance")
+    fetch("https://wahu-dazl.onrender.com/api/homeappliance")
       .then(res => res.json())
       .then(products => {
         if (!products.length) {
@@ -91,11 +91,19 @@
           const original = product.originalprice || product.originalPrice;
           const discount = calculateDiscount(product.price, original);
 
-         card.innerHTML = `
+        card.innerHTML = `
   <div class="div11" style="position: relative;">
     <a href="product.html?id=${product._id}" style="position: relative; display: block;">
-      <img src="${product.image}" alt="${product.name}" style="width: 100%; border-radius: 5px;" />
-    
+      ${(() => {
+  const baseURL = "https://wahu-dazl.onrender.com/uploads/";
+  if (product.moreImages && product.moreImages.length > 0) {
+    return Array.isArray(product.moreImages)
+      ? `<img src="${baseURL}${product.moreImages[0]}" alt="More Image" style="width: 100%; border-radius: 5px;" />`
+      : `<img src="${baseURL}${product.moreImages}" alt="More Image" style="width: 100%; border-radius: 5px;" />`;
+  }
+  return `<p>No image available</p>`;
+})()}
+
 
     <!-- ❤️ Wishlist Icon -->
     <i class="fas fa-heart wishlist-icon" 
@@ -134,7 +142,7 @@
     }
 
 
-    fetch(`http://localhost:5000/api/wishlist/toggle`, {
+    fetch(`https://wahu-dazl.onrender.com/api/wishlist/toggle`, {
 
     method: "POST",
     headers: {

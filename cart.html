@@ -82,7 +82,7 @@
       let cart = [];
 
       if (token) {
-        fetch("http://localhost:5000/api/cart", {
+        fetch("https://wahu-dazl.onrender.com/api/cart", {
           headers: { Authorization: `Bearer ${token}` }
         })
           .then(res => res.json())
@@ -164,7 +164,7 @@
 
   if (token) {
     // Send only id, size, and qty to avoid sending extra fields
-    fetch("http://localhost:5000/api/cart", {
+    fetch("https://wahu-dazl.onrender.com/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -194,7 +194,7 @@
         cart.splice(index, 1);
 
         if (token) {
-          fetch("http://localhost:5000/api/cart", {
+          fetch("https://wahu-dazl.onrender.com/api/cart", {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",

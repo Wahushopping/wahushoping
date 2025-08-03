@@ -10,7 +10,7 @@
 <body>
 
   <header>
-    <div class="logo">Wahu</div>
+    <div class="logo"><img src="image/WhatsApp Image 2025-07-30 at 22.14.43_da49cc2e.jpg" style="width: 100px; padding-top: 10px; border-radius:5px;"></div>
     
   </header>
    <div class="content">
@@ -33,7 +33,7 @@
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      fetch("http://localhost:5000/api/auth/login", {
+      fetch("https://wahu-dazl.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
@@ -65,7 +65,7 @@
   localStorage.removeItem("cart");
 
   // ✅ Fetch current user's cart from server
-  fetch("http://localhost:5000/api/cart", {
+  fetch("https://wahu-dazl.onrender.com/api/cart", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${data.token}`

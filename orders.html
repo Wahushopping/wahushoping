@@ -79,7 +79,7 @@
     }
 
     // ✅ Fetch orders safely
-    fetch("http://localhost:5000/api/orders/my", {
+    fetch("https://wahu-dazl.onrender.com/api/orders/my", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -246,7 +246,7 @@ window.addEventListener('DOMContentLoaded', changeAddress);
     const reason = prompt("Enter return reason:");
     if (!reason) return;
 
-    fetch(`http://localhost:5000/api/orders/${orderId}/return`, {
+    fetch(`https://wahu-dazl.onrender.com/api/orders/${orderId}/return`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

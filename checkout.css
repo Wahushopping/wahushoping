@@ -1,84 +1,23 @@
-/* Reset & global styles */
+/* General Reset */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  background-color: #f9f9f9;
+  background-color: #f8f9fa;
   color: #333;
-  padding-bottom: 50px;
-  
+  line-height: 1.6;
 }
 
-
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-}
-
-/* Footer Navigation Bar */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #111;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  z-index: 1000;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
-}
-
-.nav-item {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: color 0.3s ease;
-  flex: 1;
-}
-
-.nav-item i {
-  font-size: 18px;
-  margin-bottom: 4px;
-}
-
-.nav-item:hover {
-  color: #00bcd4;
-}
-
-@media screen and (max-width: 600px) {
-  .nav-item span {
-    font-size: 12px;
-  }
-
-  .nav-item i {
-    font-size: 16px;
-  }
-}
-
-a {
-  color: #fafafa;
-  text-decoration: none;
-}
-a:hover {
-  color: #00bcd4;
-}
-
-/* Header and nav */
+/* Header */
 header {
-  
+    background-color: #000000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
+    height: 55px;
     width: 100%;
     top: 0;
     left: 0;
@@ -88,134 +27,134 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-
-.logo {
-  color: bisque;
-  font-size: 24px;
-  font-weight: bold;
-  padding-left: 20px;
-}
-nav a {
-  color: #faefef;
-  margin-right: 5px;
-  font-weight: 100;
-  padding-right: 10px;
-}
-#userLinks {
-  font-weight: bold;
-}
-
-/* Hero section */
-.hero {
-  background: #8e23ff;
-  color: #fff;
-  padding: 60px 20px;
-  text-align: center;
-}
-.hero h1 {
-  font-size: 36px;
-  margin-bottom: 5px;
-  color: rgb(242, 255, 0);
-}
-.hero p {
-  font-size: 15px;
-  margin-bottom: 20px;
-}
-.hero .btn {
-  background-color: #e48201;
-  color: #000000;
-  padding: 12px 24px;
-  border-radius: 5px;
-  font-weight: bold;
-}
-.content{
-     padding-top: 80px;
-     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-     max-width:400px;
-     margin: auto;
-    
-}
-
-.form-page{
-     background-color: aqua;
-     border-radius: 7px;
-     width: 400px;
-    
-     
-}
-
-h2{
-  background-color: #ed4c02;
-  color: #ffffff;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align: center;
-  border-radius: 7px;
-}
-.item{
+img {
+  height: 31px;
+  width: 100px;
   
-     padding-top: 10px;
-
 }
-h3{
-   background-color: #292929;
-  color: #ffffff;
-  padding-top: 10px;
-  padding-bottom: 10px;
+
+/* Checkout Container */
+.checkout-container {
+  padding-top: 15px;
+  background-color: #fff;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
   text-align: center;
-}
-li{
-               
-               width: 100%;
-               display: flex;
-               justify-content: space-between;
-               padding-left: 10px;
-               margin: 1px;
-}
-.bb{
-        width: 275px;
-       
-
-}
-.aa{
-              
-               padding-right: 15px;
+  font-weight: bold;
 }
 
-p{
- 
-               width: 100%;
-               text-align: right;
-               padding-top: 15px;
-               padding-right: 20px;
-
+.checkout-container h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #444;
 }
 
-.form{
-               background-color: #2f2c2b;
-             text-align: center;
-}
-input{
-               width: 95%;
-               height: 40px;
-               margin: 2px;
-               border-radius: 5px;
-               padding-left: 10px;
-}
-button{
-               margin: 30px;
-               background-color: #f46928;
-               border-radius: 5px;
-               color: #ffffff;
+/* Address Section */
+#addressSection {
+  background-color: #f1f3f6;
+  padding: 15px;
+  border-radius: 8px;
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #eee;
-  text-align: center;
-  padding: 10px;
+#addressInfo {
   font-size: 14px;
-  border-top: 1px solid #ccc;
+  color: #555;
+}
+
+#addressSection button {
+  margin-top: 10px;
+  padding: 8px 15px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#addressSection button:hover {
+  background-color: #0056b3;
+}
+
+/* Order Items */
+#orderItems div {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+#orderItems div strong {
+  font-size: 16px;
+  color: #222;
+}
+
+/* Price Details */
+section p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+section p strong {
+  font-size: 18px;
+  color: #000;
+}
+
+/* Payment Method */
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+label {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Place Order Button */
+button[onclick="placeOrder()"] {
+  width: 100%;
+  padding: 15px;
+  background-color: #28a745;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button[onclick="placeOrder()"]:hover {
+  background-color: #218838;
+}
+
+/* Order Status */
+#orderStatus {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .checkout-container {
+    padding: 15px;
+  }
+
+  header .logo img {
+    height: 31px;
+  }
+
+  button[onclick="placeOrder()"] {
+    font-size: 16px;
+    padding: 12px;
+  }
 }

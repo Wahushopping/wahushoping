@@ -151,8 +151,8 @@ strong{
 
 
 .cata {
- 
-  padding-left: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
 
   display: flex;
   overflow-x: auto;
@@ -215,14 +215,15 @@ b{
 
 
 .search-bar{
-
-  padding-top: 55px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 50px;
   padding-bottom: 10px;
   text-align: center;
   
 }
 input{
-  width: 400px;
+  width:100%;
   height: 45px;
   border-radius: 5px;
   padding-left: 15px;
@@ -234,19 +235,19 @@ h2{
   text-align: center;
 }
 .product-grid{
- padding-left: 20px;
+ padding-left: 10px;
 }
 
 /* ========== TRENDING PRODUCTS ========== */
 .trending-products {
-  
+  padding-right: 10px;
   
   overflow-x: hidden;
 }
 
 .trending-products h2 {
-    padding-top: 10px;
-  padding-left: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
   text-align: left;
   font-size: 1.2rem;
 
@@ -257,7 +258,7 @@ h2{
 #trending-list {
 
   display: flex;
-  gap: 1rem;
+  gap: 0.4rem;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 1rem;
@@ -312,7 +313,7 @@ button{
 
 /* ========== FEATURED PRODUCTS ========== */
 .featured-products {
-  padding-right: 19px;
+  padding-right: 10px;
   
   text-align: center;
 }
@@ -325,8 +326,8 @@ button{
 
 .featured-products .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(182px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.2rem;
   max-width: 100%;
 }
 
@@ -341,6 +342,7 @@ button{
 .electronics-product {
   background-color: #facbcb70;
   border-radius: 10px;
+  padding-right: 10px;
   
   
   overflow-x: hidden;
@@ -349,7 +351,7 @@ button{
 .electronics-product h2 {
   
   padding-top: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
   text-align: left;
   font-size: 1.2rem;
   color:rgb(46, 46, 46);
@@ -362,7 +364,7 @@ button{
 #electronics-list {
 
   display: flex;
-  gap: 1rem;
+  gap: 0.4rem;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 1rem;
@@ -396,14 +398,14 @@ button{
 }
 .shoes-product {
   
-  
+  padding-right: 10px;
   overflow-x: hidden;
 }
 
 .shoes-product h2 {
  
   padding-top: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
   text-align: left;
   font-size: 1.2rem;
   color:rgb(46, 46, 46);
@@ -415,7 +417,7 @@ button{
 #shoes-list {
 
   display: flex;
-  gap: 1rem;
+  gap: 0.4rem;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 1rem;
@@ -444,14 +446,14 @@ button{
 }
 .topwear-product {
   
-  
+  padding-right: 10px;
   overflow-x: hidden;
 }
 
 .topwear-product h2 {
-
+ 
    padding-top: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
   text-align: left;
   font-size: 1.2rem;
   color:rgb(46, 46, 46);
@@ -461,7 +463,7 @@ button{
 #topwear-list {
 
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 1rem;
@@ -487,7 +489,7 @@ button{
   height: 140px;
 }
 .beauty-product {
-  
+  padding-right: 10px;
   background-color: pink;
   overflow-x: hidden;
 }
@@ -495,7 +497,7 @@ button{
 .beauty-product h2 {
 
    padding-top: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
   text-align: left;
   font-size: 1.2rem;
   color:rgb(46, 46, 46);
@@ -505,7 +507,7 @@ button{
 #beauty-list {
 
   display: flex;
-  gap: 1rem;
+  gap: 0.4rem;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 1rem;
@@ -544,7 +546,7 @@ button{
   text-transform: uppercase;
   font-size: 17px;
   text-align: left;
-  padding-left: 20px;
+  padding-left: 10px;
   color: #a31cfd;
   text-shadow: #333;
   
